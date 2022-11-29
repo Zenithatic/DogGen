@@ -5,6 +5,9 @@ import java.awt.Desktop;
 
 public class Main {
 	public static void main(String[] args) throws IOException, URISyntaxException {
+		
+		System.out.println("Attempting to find dog image...");
+		
 		URL url;
 		
 		// Get dog image
@@ -41,6 +44,9 @@ public class Main {
 				
 				dogurl = dogurl.replaceAll("\\\\", "");
 				
+				// Notify user that dog has been found
+				System.out.println("Dog found at url: " + dogurl);
+				
 				// Open dog image in default browser
 				if (Desktop.isDesktopSupported()) {
 					Desktop.getDesktop().browse(new URI(dogurl));
@@ -49,11 +55,13 @@ public class Main {
 			}
 			else {
 				// notify that error 401 or 404 occured
+				System.out.println("Oops! An error " + responseCode + " occured. Please try again.");
 				throw new RuntimeException("HttpResponseCode: " + responseCode);
 			}
 			
 		} catch (MalformedURLException e) {
 			// generate error message
+			System.out.println("An unexpected error occured. Please try again or create a new issue at the repository.");
 			e.printStackTrace();
 		}
 	}
